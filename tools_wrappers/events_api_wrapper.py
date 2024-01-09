@@ -26,12 +26,11 @@ class EventsAPIWrapper(BaseModel):
         encoded_filter_by_country =  urllib.parse.quote_plus(self.filter_by_country)
         response = requests.get(f"https://events.brahmakumaris.org/events-rest/event-search-v2?search={encoded_query}" + 
                      f"&limit=10&offset={self.offset}&filterByCountry={encoded_filter_by_country}&includeDescription=true")
-        if response.status_code >= 200 and response.status_code < 300:
-            json = response.json()
-            summaries = [self._formatted_event_summary(e) for e in json['events']]
-            return "\n\n".join(summaries)[: self.doc_content_chars_max]
-        else:
+        if response.status_code < 200 or response.status_code >= 300:
             return f"Failed to call events API with status code {response.status_code}"
+        json = response.json()
+        summaries = [self._formatted_event_summary(e) for e in json['events']]
+        return "\n\n".join(summaries)[: self.doc_content_chars_max]
         
 
     @staticmethod

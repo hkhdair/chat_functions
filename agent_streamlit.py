@@ -40,13 +40,15 @@ def init_stream_lit():
 
 def intro_text():
     with st.expander("Click to see application info:"):
-        st.write(f"""Ask questions about:
+        st.write(
+            """Ask questions about:
 - [Wikipedia](https://www.wikipedia.org/) Content
 - Scientific publications ([pubmed](https://pubmed.ncbi.nlm.nih.gov) and [arxiv](https://arxiv.org))
 - Mathematical calculations
 - Search engine content ([DuckDuckGo](https://duckduckgo.com/))
 - Meditation related events (Custom Tool)
-    """)
+    """
+        )
         
 @st.cache_resource()
 def prepare_agent() -> AgentExecutor:
